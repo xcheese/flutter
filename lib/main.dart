@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/plugin_use.dart';
 import 'package:flutter_app/stateless.dart';
+import 'package:flutter_app/stateful.dart';
 import 'package:flutter_app/buju.dart';
 
-void main() => runApp(Buju());
+void main() => runApp(Stateful());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
