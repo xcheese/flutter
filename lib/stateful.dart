@@ -60,7 +60,16 @@ class _StatefulState extends State<Stateful> {
                   ),
                   onRefresh: _handleRefresh,
                 )
-              : Text('list')),
+              : Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(color: Colors.blue),
+                        child: Text('list'),
+                      ),
+                    )
+                  ],
+                )),
     );
   }
 
