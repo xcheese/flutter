@@ -3,6 +3,8 @@ import 'package:flutter_app/plugin_use.dart';
 import 'package:flutter_app/stateless.dart';
 import 'package:flutter_app/stateful.dart';
 import 'package:flutter_app/buju.dart';
+import 'package:flutter_app/gesture.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,13 +26,53 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: Scaffold(appBar: AppBar(), body: RouterNavigator()),
+        home: Scaffold(appBar: AppBar(), body:
+          Column(
+            children: <Widget>[
+              RouterNavigator(),
+              RaisedButton(
+                onPressed: _openUrl,
+                child: Text('打开浏览器1'),
+              ),
+              RaisedButton(
+                onPressed: () => _openApp(),
+                child: Text('打开地图'),
+              ),
+            ],
+          )
+        ),
         routes: <String, WidgetBuilder>{
           'plugin_use': (BuildContext context) => PluginUse(),
           'stateless': (BuildContext context) => Stateless(),
           'stateful': (BuildContext context) => Stateful(),
           'buju': (BuildContext context) => Buju(),
+          'guesture': (BuildContext context) => Guesture(),
         });
+  }
+
+  _openApp() async{
+    const url = 'geo:52.32,4.123';
+    if(await canLaunch(url)){
+      await launch(url);
+    }else{
+      const url = 'http://maps.apple.com/?ll=52.32,4.123';
+      if(await canLaunch(url)){
+        await launch(url);
+      }else{
+        throw 'can not open $url';
+      }
+    }
+  }
+
+  _openUrl() async{
+    const url = 'https://www.baidu.com';
+    if(await canLaunch(url)){
+      print('open');
+      await launch(url);
+    }else{
+      print('can not open');
+      throw 'can not open $url';
+    }
   }
 }
 
@@ -60,6 +102,7 @@ class _RouterNavigatorState extends State<RouterNavigator> {
         _item('stateless page', Stateless(), 'stateless'),
         _item('stateful page', Stateful(), 'stateful'),
         _item('buju page', Buju(), 'buju'),
+        _item('guesture page', Guesture(), 'guesture'),
       ],
     ));
   }
@@ -68,10 +111,9 @@ class _RouterNavigatorState extends State<RouterNavigator> {
     return Container(
       child: RaisedButton(
         onPressed: () {
-          if(byName){
+          if (byName) {
             Navigator.pushNamed(context, routeName);
-          }
-          else {
+          } else {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => page));
           }
