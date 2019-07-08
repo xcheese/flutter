@@ -5,6 +5,7 @@ import 'package:flutter_app/stateful.dart';
 import 'package:flutter_app/buju.dart';
 import 'package:flutter_app/gesture.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_app/animate.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,50 +27,51 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: Scaffold(appBar: AppBar(), body:
-          Column(
-            children: <Widget>[
-              RouterNavigator(),
-              RaisedButton(
-                onPressed: _openUrl,
-                child: Text('打开浏览器1'),
-              ),
-              RaisedButton(
-                onPressed: () => _openApp(),
-                child: Text('打开地图'),
-              ),
-            ],
-          )
-        ),
+        home: Scaffold(
+            appBar: AppBar(),
+            body: Column(
+              children: <Widget>[
+                RouterNavigator(),
+                RaisedButton(
+                  onPressed: _openUrl,
+                  child: Text('打开浏览器1'),
+                ),
+                RaisedButton(
+                  onPressed: () => _openApp(),
+                  child: Text('打开地图'),
+                ),
+              ],
+            )),
         routes: <String, WidgetBuilder>{
           'plugin_use': (BuildContext context) => PluginUse(),
           'stateless': (BuildContext context) => Stateless(),
           'stateful': (BuildContext context) => Stateful(),
           'buju': (BuildContext context) => Buju(),
           'guesture': (BuildContext context) => Guesture(),
+          'animate': (BuildContext context) => LogoApp(),
         });
   }
 
-  _openApp() async{
+  _openApp() async {
     const url = 'geo:52.32,4.123';
-    if(await canLaunch(url)){
+    if (await canLaunch(url)) {
       await launch(url);
-    }else{
+    } else {
       const url = 'http://maps.apple.com/?ll=52.32,4.123';
-      if(await canLaunch(url)){
+      if (await canLaunch(url)) {
         await launch(url);
-      }else{
+      } else {
         throw 'can not open $url';
       }
     }
   }
 
-  _openUrl() async{
+  _openUrl() async {
     const url = 'https://www.baidu.com';
-    if(await canLaunch(url)){
+    if (await canLaunch(url)) {
       print('open');
       await launch(url);
-    }else{
+    } else {
       print('can not open');
       throw 'can not open $url';
     }
@@ -103,6 +105,7 @@ class _RouterNavigatorState extends State<RouterNavigator> {
         _item('stateful page', Stateful(), 'stateful'),
         _item('buju page', Buju(), 'buju'),
         _item('guesture page', Guesture(), 'guesture'),
+        _item('animate page', LogoApp(), 'guesture'),
       ],
     ));
   }
