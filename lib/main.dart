@@ -6,6 +6,7 @@ import 'package:flutter_app/buju.dart';
 import 'package:flutter_app/gesture.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_app/animate.dart';
+import 'package:flutter_app/demo.dart';
 
 void main() => runApp(MyApp());
 
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           'buju': (BuildContext context) => Buju(),
           'guesture': (BuildContext context) => Guesture(),
           'animate': (BuildContext context) => LogoApp(),
+          '布局': (BuildContext context) => DemoApp(),
         });
   }
 
@@ -106,6 +108,7 @@ class _RouterNavigatorState extends State<RouterNavigator> {
         _item('buju page', Buju(), 'buju'),
         _item('guesture page', Guesture(), 'guesture'),
         _item('animate page', LogoApp(), 'guesture'),
+        _item('demo 布局 page', DemoApp(), 'demo'),
       ],
     ));
   }
